@@ -30,8 +30,8 @@ $social = Join-Path $root 'public\social'
 
 New-Item -ItemType Directory -Force -Path $scenes, $brand, $social | Out-Null
 
-Export-Crop -Source (Join-Path $reference '04_x_banner_reference.png') -Destination (Join-Path $scenes 'hero-day.png') -Crop (New-Object System.Drawing.Rectangle(780, 0, 1392, 724)) -Width 1600 -Height 900
-Export-Crop -Source (Join-Path $reference '02_website_dark_reference.png') -Destination (Join-Path $scenes 'hero-night.png') -Crop (New-Object System.Drawing.Rectangle(320, 88, 645, 453)) -Width 1600 -Height 900
+Export-Crop -Source (Join-Path $reference '04_x_banner_reference.png') -Destination (Join-Path $scenes 'hero-day.png') -Crop (New-Object System.Drawing.Rectangle(1160, 78, 1012, 569)) -Width 1600 -Height 900
+Export-Crop -Source (Join-Path $reference '02_website_dark_reference.png') -Destination (Join-Path $scenes 'hero-night.png') -Crop (New-Object System.Drawing.Rectangle(450, 88, 515, 453)) -Width 1600 -Height 900
 
 Copy-Item -LiteralPath (Join-Path $reference '06_logo_mark_transparent.png') -Destination (Join-Path $brand 'logo-mark.png') -Force
 Copy-Item -LiteralPath (Join-Path $reference '07_logo_lockup_light_transparent.png') -Destination (Join-Path $brand 'logo-lockup-light.png') -Force
