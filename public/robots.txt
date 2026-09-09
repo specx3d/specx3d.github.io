@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /keystatic/
+
+Sitemap: https://specx3d.github.io/sitemap-index.xml

@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
+import daySource from '../assets/images/scenes/hero-day.png';
+import nightSource from '../assets/images/scenes/hero-night.png';
+import { statusLabels } from '../lib/content';
+
+interface Props { game: CollectionEntry<'games'> }
+const { game } = Astro.props;
+const day = await getImage({ src: daySource, width: 1200, format: 'webp', quality: 80 });
+const night = await getImage({ src: nightSource, width: 1200, format: 'webp', quality: 80 });
+---
+
+<section class="featured shell section-space" data-reveal aria-labelledby="current-project-title">
+  <div class="featured-copy">
+    <p class="eyebrow">Current project</p>
+    <h2 id="current-project-title">{game.data.title}</h2>
+    <p class="featured-lead">{game.data.shortDescription}</p>
+    <dl class="project-facts">
+      <div><dt>Status</dt><dd>{statusLabels[game.data.status]}</dd></div>
+      {game.data.platforms.length > 0 && <div><dt>Platforms</dt><dd>{game.data.platforms.join(', ')}</dd></div>}
+      {game.data.releaseDateOrWindow && <div><dt>Window</dt><dd>{game.data.releaseDateOrWindow}</dd></div>}
+    </dl>
+    <div class="button-row">
+      <a class="button button-primary" href={`/games/${game.id}`}>View project <span aria-hidden="true">→</span></a>
+      {game.data.storeUrl && <a class="button button-secondary" href={game.data.storeUrl}>Store page</a>}
+      {game.data.trailerUrl && <a class="button button-secondary" href={game.data.trailerUrl}>Watch trailer</a>}
+    </div>
+  </div>
+  <div class="featured-media media-frame">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
+      <img src={day.src} width="1200" height="675" alt="Atmospheric countryside concept for the current project" loading="lazy" />
+    </picture>
+  </div>
+</section>

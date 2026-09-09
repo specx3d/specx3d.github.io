@@ -1,0 +1,28 @@
+---
+import { getImage } from 'astro:assets';
+import daySource from '../assets/images/scenes/hero-day.png';
+import nightSource from '../assets/images/scenes/hero-night.png';
+
+const day = await getImage({ src: daySource, width: 1600, format: 'webp', quality: 82 });
+const night = await getImage({ src: nightSource, width: 1600, format: 'webp', quality: 82 });
+---
+
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-media">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
+      <img src={day.src} width="1600" height="900" alt="A quiet village landscape with a winding river" fetchpriority="high" />
+    </picture>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Independent games · Thoughtful places</p>
+      <h1 id="hero-title">Quiet Current<br />Games</h1>
+      <p class="hero-lead">Crafting compact worlds with character.</p>
+      <div class="button-row">
+        <a class="button button-primary" href="/games/current-project">Explore the current project <span aria-hidden="true">→</span></a>
+        <a class="button button-ghost" href="/studio">Meet the studio</a>
+      </div>
+    </div>
+    <p class="hero-signoff">Small worlds.<br />Big stories.</p>
+  </div>
+</section>

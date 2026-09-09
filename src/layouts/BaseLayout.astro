@@ -1,0 +1,91 @@
+---
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import settings from '../content/settings/site.json';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = settings.defaultSeoTitle,
+  description = settings.defaultSeoDescription,
+  image = '/social/quiet-current-games-banner.png',
+  type = 'website',
+  structuredData,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Quiet Current Games',
+  url: Astro.site?.toString(),
+  logo: new URL('/brand/logo-mark.png', Astro.site).toString(),
+  description: settings.studioShortDescription,
+  email: settings.contactEmail,
+  sameAs: [settings.xUrl, settings.youtubeUrl, settings.steamUrl].filter(Boolean),
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1010" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/brand/logo-mark-monochrome.png" />
+    <link rel="apple-touch-icon" href="/brand/logo-mark.png" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Quiet Current Games" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header currentPath={Astro.url.pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      const reveal = () => {
+        const items = document.querySelectorAll('[data-reveal]');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          items.forEach((item) => item.setAttribute('data-visible', 'true'));
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-visible', 'true');
+              observer.unobserve(entry.target);
+            }
+          }),
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        items.forEach((item) => observer.observe(item));
+      };
+      reveal();
+      document.addEventListener('astro:page-load', reveal);
+    </script>
+  </body>
+</html>

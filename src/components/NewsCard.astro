@@ -1,0 +1,15 @@
+---
+import { formatDate } from '../lib/content';
+interface Props { slug: string; title: string; date: Date; excerpt: string; tags?: string[] }
+const { slug, title, date, excerpt, tags = [] } = Astro.props;
+---
+
+<article class="news-card" data-reveal>
+  <div class="meta-row">
+    <time datetime={date.toISOString()}>{formatDate(date)}</time>
+    {tags[0] && <span>{tags[0]}</span>}
+  </div>
+  <h3><a href={`/news/${slug}`}>{title}</a></h3>
+  <p>{excerpt}</p>
+  <a class="text-link" href={`/news/${slug}`}>Read note <span aria-hidden="true">→</span></a>
+</article>

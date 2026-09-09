@@ -1,0 +1,27 @@
+---
+export const prerender = true;
+import BaseLayout from '@layouts/BaseLayout.astro';
+import settings from '../content/settings/site.json';
+const socials = [
+  { href: settings.xUrl, label: 'X' },
+  { href: settings.youtubeUrl, label: 'YouTube' },
+  { href: settings.steamUrl, label: 'Steam' },
+].filter((item) => item.href);
+---
+
+<BaseLayout title="Contact — Quiet Current Games" description="Contact Quiet Current Games and find the studio online.">
+  <header class="page-hero shell">
+    <p class="eyebrow">Contact</p>
+    <h1>Say hello.</h1>
+    <p>For press, publishing, platform and general studio enquiries, email is the simplest way to get in touch.</p>
+  </header>
+  <section class="contact-card shell" data-reveal>
+    <h2>Let’s start a conversation.</h2>
+    <a class="email-link" href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>
+    {socials.length > 0 && (
+      <div class="button-row">
+        {socials.map((social) => <a class="button button-secondary" href={social.href} rel="me noreferrer">{social.label}</a>)}
+      </div>
+    )}
+  </section>
+</BaseLayout>

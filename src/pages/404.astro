@@ -1,0 +1,13 @@
+---
+export const prerender = true;
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found — Quiet Current Games" description="The requested page could not be found.">
+  <section class="page-hero shell">
+    <p class="eyebrow">404</p>
+    <h1>This path runs quiet.</h1>
+    <p>The page may have moved, or it may not exist yet.</p>
+    <div class="button-row"><a class="button button-primary" href="/">Return home <span aria-hidden="true">→</span></a></div>
+  </section>
+</BaseLayout>

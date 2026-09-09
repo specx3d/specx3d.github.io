@@ -1,0 +1,61 @@
+---
+export const prerender = true;
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import daySource from '../../assets/images/scenes/hero-day.png';
+import nightSource from '../../assets/images/scenes/hero-night.png';
+import { statusLabels } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games');
+  return games.map((game) => ({ params: { slug: game.id }, props: { game } }));
+}
+
+interface Props { game: CollectionEntry<'games'> }
+const { game } = Astro.props;
+const { Content } = await render(game);
+const day = await getImage({ src: daySource, width: 1600, format: 'webp', quality: 82 });
+const night = await getImage({ src: nightSource, width: 1600, format: 'webp', quality: 82 });
+const videoGameSchema = game.data.title !== 'Current project' ? {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: game.data.title,
+  description: game.data.shortDescription,
+  url: new URL(`/games/${game.id}`, Astro.site).toString(),
+  gamePlatform: game.data.platforms,
+  genre: game.data.tags,
+} : undefined;
+---
+
+<BaseLayout title={`${game.data.title} — Quiet Current Games`} description={game.data.shortDescription} structuredData={videoGameSchema}>
+  <header class="page-hero shell">
+    <p class="eyebrow">{statusLabels[game.data.status]}</p>
+    <h1>{game.data.title}</h1>
+    <p>{game.data.shortDescription}</p>
+    <ul class="tag-list">
+      {game.data.tags.map((tag) => <li>{tag}</li>)}
+      {game.data.platforms.map((platform) => <li>{platform}</li>)}
+    </ul>
+    {(game.data.storeUrl || game.data.trailerUrl) && (
+      <div class="button-row">
+        {game.data.storeUrl && <a class="button button-primary" href={game.data.storeUrl}>Visit store <span aria-hidden="true">→</span></a>}
+        {game.data.trailerUrl && <a class="button button-secondary" href={game.data.trailerUrl}>Watch trailer</a>}
+      </div>
+    )}
+  </header>
+  <div class="shell media-frame detail-media" data-reveal>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset={game.data.heroImageDark || night.src} />
+      <img src={game.data.heroImageLight || day.src} width="1600" height="900" alt={`Key art for ${game.data.title}`} />
+    </picture>
+  </div>
+  <article class="prose-shell prose">
+    <Content />
+    <dl class="project-facts">
+      <div><dt>Status</dt><dd>{statusLabels[game.data.status]}</dd></div>
+      {game.data.platforms.length > 0 && <div><dt>Platforms</dt><dd>{game.data.platforms.join(', ')}</dd></div>}
+      {game.data.releaseDateOrWindow && <div><dt>Release</dt><dd>{game.data.releaseDateOrWindow}</dd></div>}
+    </dl>
+  </article>
+</BaseLayout>

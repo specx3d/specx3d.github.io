@@ -1,0 +1,34 @@
+---
+import settings from '../content/settings/site.json';
+const socials = [
+  { href: settings.xUrl, label: 'X' },
+  { href: settings.youtubeUrl, label: 'YouTube' },
+  { href: settings.steamUrl, label: 'Steam' },
+].filter((item) => item.href);
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="footer-brand" href="/">
+        <img src="/brand/logo-mark.png" width="1254" height="1254" alt="" />
+        <span>Quiet Current Games</span>
+      </a>
+      <p>Crafting compact worlds with character.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/games">Games</a>
+      <a href="/news">Dev Log</a>
+      <a href="/studio">Studio</a>
+    </div>
+    <div class="footer-links">
+      <a href="/press">Press</a>
+      <a href="/contact">Contact</a>
+      {socials.map((social) => <a href={social.href} rel="me noreferrer">{social.label}</a>)}
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© {new Date().getFullYear()} Quiet Current Games</span>
+    <span>Small worlds. Big stories.</span>
+  </div>
+</footer>

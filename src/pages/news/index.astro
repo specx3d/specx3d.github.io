@@ -1,0 +1,23 @@
+---
+export const prerender = true;
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NewsCard from '@components/NewsCard.astro';
+
+const entries = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Dev Log — Quiet Current Games" description="Development notes and studio news from Quiet Current Games.">
+  <header class="page-hero shell">
+    <p class="eyebrow">News and dev log</p>
+    <h1>Notes from the workbench.</h1>
+    <p>Development progress, process and occasional glimpses into the worlds taking shape.</p>
+  </header>
+  <section class="shell section-space" aria-label="News and development notes">
+    <div class="news-grid">
+      {entries.map((entry) => (
+        <NewsCard slug={entry.id} title={entry.data.title} date={entry.data.date} excerpt={entry.data.excerpt} tags={entry.data.tags} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

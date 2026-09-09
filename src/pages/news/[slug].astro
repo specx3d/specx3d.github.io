@@ -1,0 +1,31 @@
+---
+export const prerender = true;
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<'news'> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={`${entry.data.title} — Quiet Current Games`} description={entry.data.excerpt} type="article" image={entry.data.coverImage}>
+  <article>
+    <header class="page-hero shell">
+      <p class="eyebrow">Dev log</p>
+      <h1>{entry.data.title}</h1>
+      <p>{entry.data.excerpt}</p>
+      <div class="article-meta">
+        <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+        {entry.data.tags.length > 0 && <span>{entry.data.tags.join(' · ')}</span>}
+      </div>
+    </header>
+    {entry.data.coverImage && <div class="shell media-frame detail-media"><img src={entry.data.coverImage} alt="" /></div>}
+    <div class="prose-shell prose"><Content /></div>
+  </article>
+</BaseLayout>

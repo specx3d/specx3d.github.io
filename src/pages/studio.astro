@@ -1,0 +1,27 @@
+---
+export const prerender = true;
+import BaseLayout from '@layouts/BaseLayout.astro';
+import settings from '../content/settings/site.json';
+---
+
+<BaseLayout title="Studio — Quiet Current Games" description="Meet the one-person studio behind Quiet Current Games.">
+  <header class="page-hero shell">
+    <p class="eyebrow">The studio</p>
+    <h1>One person. A close eye on every detail.</h1>
+    <p>{settings.studioShortDescription}</p>
+  </header>
+  <section class="info-grid shell" aria-label="Studio approach">
+    <article class="info-block" data-reveal>
+      <h2>Compact by design</h2>
+      <p>Smaller scope creates room to refine the feel, rhythm and character of each place.</p>
+    </article>
+    <article class="info-block" data-reveal>
+      <h2>Atmosphere with purpose</h2>
+      <p>Art, sound and story work together to support play — not sit beside it.</p>
+    </article>
+    <article class="info-block" data-reveal>
+      <h2>Built to be remembered</h2>
+      <p>The goal is simple: worlds small enough to know, and distinctive enough to stay with you.</p>
+    </article>
+  </section>
+</BaseLayout>

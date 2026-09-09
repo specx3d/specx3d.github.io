@@ -1,0 +1,27 @@
+---
+import { statusLabels } from '../lib/content';
+interface Props {
+  slug: string;
+  title: string;
+  status: string;
+  description: string;
+  platforms?: string[];
+}
+const { slug, title, status, description, platforms = [] } = Astro.props;
+---
+
+<article class="project-card" data-reveal>
+  <a class="project-card-media" href={`/games/${slug}`} aria-label={`View ${title}`}>
+    <span class="current-rings" aria-hidden="true"></span>
+    <img src="/brand/logo-mark-monochrome.png" width="1254" height="1254" alt="" loading="lazy" />
+  </a>
+  <div class="project-card-copy">
+    <div class="meta-row">
+      <span>{statusLabels[status] || status}</span>
+      {platforms.length > 0 && <span>{platforms.join(' · ')}</span>}
+    </div>
+    <h2><a href={`/games/${slug}`}>{title}</a></h2>
+    <p>{description}</p>
+    <a class="text-link" href={`/games/${slug}`}>Explore project <span aria-hidden="true">→</span></a>
+  </div>
+</article>

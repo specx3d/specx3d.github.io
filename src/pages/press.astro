@@ -1,0 +1,47 @@
+---
+export const prerender = true;
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import settings from '../content/settings/site.json';
+import { statusLabels } from '../lib/content';
+
+const games = (await getCollection('games')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<BaseLayout title="Press Kit — Quiet Current Games" description="Studio facts, project information, approved logos and contact details for Quiet Current Games.">
+  <header class="page-hero shell">
+    <p class="eyebrow">Press kit</p>
+    <h1>Quiet Current Games, at a glance.</h1>
+    <p>Approved studio information and brand assets for journalists, creators and event partners.</p>
+  </header>
+  <section class="info-grid shell" aria-label="Press information">
+    <article class="info-block">
+      <h2>Studio boilerplate</h2>
+      <p>{settings.studioShortDescription}</p>
+      <p>Quiet Current Games crafts compact worlds with character. Small worlds. Big stories.</p>
+    </article>
+    <article class="info-block">
+      <h2>Projects</h2>
+      <div class="download-list">
+        {games.map((game) => <a href={`/games/${game.id}`}><span>{game.data.title}</span><span>{statusLabels[game.data.status]} →</span></a>)}
+      </div>
+    </article>
+    <article class="info-block">
+      <h2>Contact</h2>
+      <p>For press, creator and business enquiries:</p>
+      <a class="text-link" href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>
+    </article>
+  </section>
+  <section class="contact-card shell" data-reveal>
+    <p class="eyebrow">Approved brand assets</p>
+    <h2>Logos ready to use.</h2>
+    <p>Use the lockup that provides the clearest contrast. Please keep the mark’s proportions and leave comfortable space around it.</p>
+    <div class="download-list">
+      <a href="/brand/logo-lockup-light.png" download><span>Light-surface logo lockup</span><span>PNG ↓</span></a>
+      <a href="/brand/logo-lockup-dark.png" download><span>Dark-surface logo lockup</span><span>PNG ↓</span></a>
+      <a href="/brand/logo-mark.png" download><span>Stream emblem</span><span>PNG ↓</span></a>
+      <a href="/brand/logo-mark-monochrome.png" download><span>Monochrome emblem</span><span>PNG ↓</span></a>
+      <a href="/social/quiet-current-games-banner.png" download><span>Social banner / key art</span><span>PNG ↓</span></a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+export const prerender = true;
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectCard from '@components/ProjectCard.astro';
+
+const games = (await getCollection('games')).sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<BaseLayout title="Games — Quiet Current Games" description="Explore the games and worlds in development at Quiet Current Games.">
+  <header class="page-hero shell">
+    <p class="eyebrow">Projects</p>
+    <h1>Compact worlds, each with a current of its own.</h1>
+    <p>Games in development, experiments worth following, and future places waiting to be explored.</p>
+  </header>
+  <section class="page-grid shell" aria-label="Games and projects">
+    {games.map((game) => (
+      <ProjectCard slug={game.id} title={game.data.title} status={game.data.status} description={game.data.shortDescription} platforms={game.data.platforms} />
+    ))}
+  </section>
+</BaseLayout>
