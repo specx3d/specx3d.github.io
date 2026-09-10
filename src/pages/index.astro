@@ -20,22 +20,29 @@ const latestNews = (await getCollection('news'))
   <Hero />
   {featuredGame && <FeaturedProject game={featuredGame} />}
 
-  <section class="shell section-space studio-tease" aria-labelledby="solo-studio-title">
+  <section class="shell section-space studio-tease" aria-labelledby="small-studio-title">
     <div class="studio-card" data-reveal>
-      <p class="large-number">1</p>
-      <p>One person, keeping scope close and attention on the details that make a world feel alive.</p>
+      <p class="eyebrow">Built differently</p>
+      <h3>Modern tools.<br />Personal worlds.</h3>
+      <p>Technology helps a very small team move from an idea to a living world without losing the personality that made the idea worth pursuing.</p>
+      <ol class="studio-process" aria-label="Our creative process">
+        <li><span>01</span>Vision</li>
+        <li><span>02</span>Prototype</li>
+        <li><span>03</span>World</li>
+      </ol>
     </div>
     <div class="studio-copy" data-reveal>
-      <p class="eyebrow">The solo studio</p>
-      <h2 id="solo-studio-title">Small team.<br />Clear intention.</h2>
-      <p>Quiet Current Games is a one-person independent studio focused on compact scope, atmosphere, expressive gameplay and places that stay with you.</p>
+      <p class="eyebrow">A very small indie studio</p>
+      <h2 id="small-studio-title">Small scale.<br />Clear vision.</h2>
+      <p>Quiet Current Games uses modern technology to turn ambitious ideas into focused games. Staying very small lets us experiment quickly, make bold choices and keep each project close to its original vision.</p>
+      <p>We care about atmosphere, expressive systems and compact places that feel alive — worlds where every road, character and unexpected detour has room to matter.</p>
       <a class="text-link" href="/studio">About the studio <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
   <section class="shell section-space" aria-labelledby="latest-news-title">
     <SectionHeading eyebrow="Latest notes" title="From the dev log" intro="Short, honest updates from the workbench — progress, process and the decisions behind each world." />
-    <div class="news-grid">
+    <div class:list={["news-grid", { "is-single": latestNews.length === 1 }]}>
       {latestNews.map((entry) => (
         <NewsCard slug={entry.id} title={entry.data.title} date={entry.data.date} excerpt={entry.data.excerpt} tags={entry.data.tags} />
       ))}
@@ -43,15 +50,22 @@ const latestNews = (await getCollection('news'))
   </section>
 
   <section class="shell section-space" aria-labelledby="more-worlds-title">
-    <SectionHeading eyebrow="The wider current" title="More worlds will follow" intro="Quiet Current Games is the studio, not a single setting. Different genres and different places can share the same care for compact, memorable play." />
-    <div class="worlds-strip">
+    <SectionHeading eyebrow="The wider current" title="A point of view, not a single genre" intro="Powrót is where the journey begins. Future projects may change genre, place and mood, while keeping the same focus on character, freedom and memorable play." />
+    <div class="worlds-strip worlds-strip-three">
       <article class="world-panel" data-reveal>
-        <h3 id="more-worlds-title">Different games.</h3>
-        <p>Each project can find its own visual language, mechanics and mood without losing the studio’s calm, handcrafted approach.</p>
+        <p class="eyebrow">01 · Scope</p>
+        <h3 id="more-worlds-title">Small enough to matter.</h3>
+        <p>Focused worlds give every system, place and encounter a clearer purpose.</p>
       </article>
       <article class="world-panel" data-reveal>
-        <h3>The same current.</h3>
-        <p>Small worlds. Big stories. A home for whatever comes next.</p>
+        <p class="eyebrow">02 · Technology</p>
+        <h3>Tools serve the vision.</h3>
+        <p>Modern technology lets a very small studio explore ideas that once required much larger teams.</p>
+      </article>
+      <article class="world-panel" data-reveal>
+        <p class="eyebrow">03 · Identity</p>
+        <h3>Every world finds its voice.</h3>
+        <p>Different genres and moods, united by atmosphere, playful freedom and a strong sense of place.</p>
       </article>
     </div>
   </section>

@@ -14,25 +14,42 @@ const darkImage = game.data.heroImageDark || game.data.heroImageLight || night.s
 ---
 
 <section class="featured shell section-space" data-reveal aria-labelledby="current-project-title">
-  <div class="featured-copy">
-    <p class="eyebrow">Current project</p>
-    <h2 id="current-project-title">{game.data.title}</h2>
-    <p class="featured-lead">{game.data.shortDescription}</p>
-    <dl class="project-facts">
-      <div><dt>Status</dt><dd>{statusLabels[game.data.status]}</dd></div>
-      {game.data.platforms.length > 0 && <div><dt>Platforms</dt><dd>{game.data.platforms.join(', ')}</dd></div>}
-      {game.data.releaseDateOrWindow && <div><dt>Window</dt><dd>{game.data.releaseDateOrWindow}</dd></div>}
-    </dl>
-    <div class="button-row">
-      <a class="button button-primary" href={`/games/${game.id}`}>View project <span aria-hidden="true">→</span></a>
-      {game.data.storeUrl && <a class="button button-secondary" href={game.data.storeUrl}>Store page</a>}
-      {game.data.trailerUrl && <a class="button button-secondary" href={game.data.trailerUrl}>Watch trailer</a>}
+  <div class="featured-main">
+    <div class="featured-copy">
+      <p class="eyebrow">Current project</p>
+      <h2 id="current-project-title">{game.data.title}</h2>
+      <p class="featured-lead">{game.data.shortDescription}</p>
+      <dl class="project-facts">
+        <div><dt>Status</dt><dd>{statusLabels[game.data.status]}</dd></div>
+        {game.data.platforms.length > 0 && <div><dt>Platforms</dt><dd>{game.data.platforms.join(', ')}</dd></div>}
+        {game.data.releaseDateOrWindow && <div><dt>Window</dt><dd>{game.data.releaseDateOrWindow}</dd></div>}
+      </dl>
+      <div class="button-row">
+        <a class="button button-primary" href={`/games/${game.id}`}>View project <span aria-hidden="true">→</span></a>
+        {game.data.storeUrl && <a class="button button-secondary" href={game.data.storeUrl}>Store page</a>}
+        {game.data.trailerUrl && <a class="button button-secondary" href={game.data.trailerUrl}>Watch trailer</a>}
+      </div>
+    </div>
+    <div class="featured-media media-frame">
+      <picture>
+        <source data-theme-source media="(prefers-color-scheme: dark)" srcset={darkImage} />
+        <img src={lightImage} width="1366" height="768" alt={`Gameplay artwork from ${game.data.title}`} loading="lazy" />
+      </picture>
+      <p class="featured-caption">A familiar place. Plenty of ways to make it your own.</p>
     </div>
   </div>
-  <div class="featured-media media-frame">
-    <picture>
-      <source data-theme-source media="(prefers-color-scheme: dark)" srcset={darkImage} />
-      <img src={lightImage} width="1366" height="768" alt={`Gameplay artwork from ${game.data.title}`} loading="lazy" />
-    </picture>
+  <div class="project-pillars" aria-label="What defines Powrót">
+    <article>
+      <span>01</span>
+      <div><h3>Compact freedom</h3><p>An open world made to become familiar — small enough to know, open enough to surprise you.</p></div>
+    </article>
+    <article>
+      <span>02</span>
+      <div><h3>Everyday trouble</h3><p>Odd jobs, local characters and small decisions that can turn an ordinary day into your own story.</p></div>
+    </article>
+    <article>
+      <span>03</span>
+      <div><h3>A slower rhythm</h3><p>Freedom, mischief and exploration set against the warmth and calm of the Polish countryside.</p></div>
+    </article>
   </div>
 </section>
