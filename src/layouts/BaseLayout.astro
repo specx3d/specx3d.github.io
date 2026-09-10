@@ -41,6 +41,12 @@ const organizationSchema = {
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0d1010" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem('qcg-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+      } catch {}
+    </script>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/brand/logo-mark-monochrome.png" />
@@ -67,6 +73,45 @@ const organizationSchema = {
     </main>
     <Footer />
     <script>
+      const setupThemeToggle = () => {
+        const root = document.documentElement;
+        const preference = window.matchMedia('(prefers-color-scheme: dark)');
+        const button = document.querySelector('[data-theme-toggle]');
+        if (!(button instanceof HTMLButtonElement)) return;
+
+        const effectiveTheme = () => root.dataset.theme || (preference.matches ? 'dark' : 'light');
+        const syncThemeMedia = () => {
+          const override = root.dataset.theme;
+          document.querySelectorAll('[data-theme-source]').forEach((source) => {
+            if (!(source instanceof HTMLSourceElement)) return;
+            source.media = override === 'dark' ? 'all' : override === 'light' ? 'not all' : '(prefers-color-scheme: dark)';
+          });
+        };
+        const updateButton = () => {
+          const current = effectiveTheme();
+          const target = current === 'dark' ? 'light' : 'dark';
+          button.setAttribute('aria-label', `Switch to ${target} theme`);
+          button.dataset.currentTheme = current;
+          const icon = button.querySelector('[data-theme-icon]');
+          if (icon) icon.textContent = current === 'dark' ? '☀' : '☾';
+          syncThemeMedia();
+        };
+
+        button.addEventListener('click', () => {
+          const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('qcg-theme', next); } catch {}
+          updateButton();
+        });
+        button.addEventListener('dblclick', () => {
+          delete root.dataset.theme;
+          try { localStorage.removeItem('qcg-theme'); } catch {}
+          updateButton();
+        });
+        preference.addEventListener('change', () => { if (!root.dataset.theme) updateButton(); });
+        updateButton();
+      };
+
       const reveal = () => {
         const items = document.querySelectorAll('[data-reveal]');
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -84,6 +129,7 @@ const organizationSchema = {
         );
         items.forEach((item) => observer.observe(item));
       };
+      setupThemeToggle();
       reveal();
       document.addEventListener('astro:page-load', reveal);
     </script>

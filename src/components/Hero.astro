@@ -10,7 +10,7 @@ const night = await getImage({ src: nightSource, width: 1600, format: 'webp', qu
 <section class="hero shell" aria-labelledby="hero-title">
   <div class="hero-media">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
+      <source data-theme-source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
       <img src={day.src} width="1600" height="900" alt="A quiet village landscape with a winding river" fetchpriority="high" />
     </picture>
     <div class="hero-shade"></div>
@@ -19,7 +19,7 @@ const night = await getImage({ src: nightSource, width: 1600, format: 'webp', qu
       <h1 id="hero-title">Quiet Current<br />Games</h1>
       <p class="hero-lead">Crafting compact worlds with character.</p>
       <div class="button-row">
-        <a class="button button-primary" href="/games/current-project">Explore the current project <span aria-hidden="true">→</span></a>
+        <a class="button button-primary" href="/games/powrot">Explore Powrót <span aria-hidden="true">→</span></a>
         <a class="button button-ghost" href="/studio">Meet the studio</a>
       </div>
     </div>

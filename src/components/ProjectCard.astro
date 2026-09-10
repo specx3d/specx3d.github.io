@@ -6,14 +6,15 @@ interface Props {
   status: string;
   description: string;
   platforms?: string[];
+  image?: string;
 }
-const { slug, title, status, description, platforms = [] } = Astro.props;
+const { slug, title, status, description, platforms = [], image } = Astro.props;
 ---
 
 <article class="project-card" data-reveal>
   <a class="project-card-media" href={`/games/${slug}`} aria-label={`View ${title}`}>
-    <span class="current-rings" aria-hidden="true"></span>
-    <img src="/brand/logo-mark-monochrome.png" width="1254" height="1254" alt="" loading="lazy" />
+    {!image && <span class="current-rings" aria-hidden="true"></span>}
+    <img class:list={{ 'project-art': image }} src={image || '/brand/logo-mark-monochrome.png'} width={image ? 1366 : 1254} height={image ? 768 : 1254} alt={image ? `Artwork from ${title}` : ''} loading="lazy" />
   </a>
   <div class="project-card-copy">
     <div class="meta-row">

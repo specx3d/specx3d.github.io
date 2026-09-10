@@ -46,7 +46,7 @@ const videoGameSchema = game.data.title !== 'Current project' ? {
   </header>
   <div class="shell media-frame detail-media" data-reveal>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset={game.data.heroImageDark || night.src} />
+      <source data-theme-source media="(prefers-color-scheme: dark)" srcset={game.data.heroImageDark || game.data.heroImageLight || night.src} />
       <img src={game.data.heroImageLight || day.src} width="1600" height="900" alt={`Key art for ${game.data.title}`} />
     </picture>
   </div>

@@ -9,6 +9,8 @@ interface Props { game: CollectionEntry<'games'> }
 const { game } = Astro.props;
 const day = await getImage({ src: daySource, width: 1200, format: 'webp', quality: 80 });
 const night = await getImage({ src: nightSource, width: 1200, format: 'webp', quality: 80 });
+const lightImage = game.data.heroImageLight || day.src;
+const darkImage = game.data.heroImageDark || game.data.heroImageLight || night.src;
 ---
 
 <section class="featured shell section-space" data-reveal aria-labelledby="current-project-title">
@@ -29,8 +31,8 @@ const night = await getImage({ src: nightSource, width: 1200, format: 'webp', qu
   </div>
   <div class="featured-media media-frame">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
-      <img src={day.src} width="1200" height="675" alt="Atmospheric countryside concept for the current project" loading="lazy" />
+      <source data-theme-source media="(prefers-color-scheme: dark)" srcset={darkImage} />
+      <img src={lightImage} width="1366" height="768" alt={`Gameplay artwork from ${game.data.title}`} loading="lazy" />
     </picture>
   </div>
 </section>

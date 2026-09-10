@@ -15,7 +15,7 @@ const games = (await getCollection('games')).sort((a, b) => a.data.sortOrder - b
   </header>
   <section class="page-grid shell" aria-label="Games and projects">
     {games.map((game) => (
-      <ProjectCard slug={game.id} title={game.data.title} status={game.data.status} description={game.data.shortDescription} platforms={game.data.platforms} />
+      <ProjectCard slug={game.id} title={game.data.title} status={game.data.status} description={game.data.shortDescription} platforms={game.data.platforms} image={game.data.heroImageLight} />
     ))}
   </section>
 </BaseLayout>

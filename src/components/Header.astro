@@ -24,6 +24,10 @@ const active = (href: string) => currentPath === href || currentPath.startsWith(
       ))}
     </nav>
 
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme" title="Switch theme. Double-click to follow the system again.">
+      <span data-theme-icon aria-hidden="true">◐</span>
+    </button>
+
     <p class="header-note">A quieter<br />brighter play.</p>
 
     <details class="mobile-menu">
