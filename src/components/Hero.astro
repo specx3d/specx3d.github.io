@@ -1,27 +1,22 @@
----
-import { getImage } from 'astro:assets';
-import daySource from '../assets/images/scenes/hero-day.png';
-import nightSource from '../assets/images/scenes/hero-night.png';
-
-const day = await getImage({ src: daySource, width: 1600, format: 'webp', quality: 82 });
-const night = await getImage({ src: nightSource, width: 1600, format: 'webp', quality: 82 });
----
-
 <section class="hero shell" aria-labelledby="hero-title">
   <div class="hero-media">
     <picture>
-      <source data-theme-source media="(prefers-color-scheme: dark)" srcset={night.src} type="image/webp" />
-      <img src={day.src} width="1600" height="900" alt="A quiet village landscape with a winding river" fetchpriority="high" />
+      <img src="/media/games/unnamed-project.png" width="1372" height="768" alt="A rural landscape from the studio’s unnamed game project" fetchpriority="high" />
     </picture>
     <div class="hero-shade"></div>
     <div class="hero-copy">
       <p class="eyebrow">Independent games · Thoughtful places</p>
       <h1 id="hero-title">Quiet Current<br />Games</h1>
-      <p class="hero-lead">Building compact worlds with character.</p>
+      <p class="hero-lead">Local stories. Small worlds. A lasting impact.</p>
       <div class="button-row">
-        <a class="button button-primary" href="/games/powrot">Explore Powrót <span aria-hidden="true">→</span></a>
+        <a class="button button-primary" href="/games/unnamed-project">Explore the project <span aria-hidden="true">→</span></a>
         <a class="button button-ghost" href="/studio">Meet the studio</a>
       </div>
+    </div>
+    <div class="hero-tool-stack" aria-label="Development tools and release plans">
+      <div><strong>Unity</strong><span>Development</span></div>
+      <div><strong>AI-assisted</strong><span>Workflow</span></div>
+      <div><strong>Steam</strong><span>Demo planned</span></div>
     </div>
     <p class="hero-signoff">Small worlds.<br />Big stories.</p>
   </div>

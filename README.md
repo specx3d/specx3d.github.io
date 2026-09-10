@@ -28,3 +28,13 @@ Każdy push do brancha `main` automatycznie publikuje nową wersję pod adresem 
 ## Treści
 
 Gry i aktualności są przechowywane w `src/content`. Lokalny panel Keystatic ułatwia ich edycję, a zapisane pliki można normalnie commitować i wysyłać do `main`.
+
+### Dodawanie aktualności bez edycji kodu
+
+1. Kliknij dwukrotnie `DODAJ_NEWS.bat`.
+2. W otwartym panelu wybierz **News / Dev Log**, a następnie **Create**.
+3. Uzupełnij tytuł, datę, krótki opis i treść. Opcjonalnie dodaj zdjęcie oraz tagi.
+4. Kliknij **Create** lub **Save**.
+5. Zamknij okno serwera i kliknij dwukrotnie `OPUBLIKUJ_STRONE.bat`.
+
+Publikator sprawdzi stronę, zapisze nowe treści w repozytorium i wyśle je do `main`. GitHub Pages opublikuje nową wersję automatycznie.
